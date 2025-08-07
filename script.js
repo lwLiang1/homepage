@@ -233,7 +233,149 @@ document.addEventListener('DOMContentLoaded', function() {
     images.forEach(img => imageObserver.observe(img));
 });
 
+// PDF预览功能
+function openPDFViewer(pdfFileName, event) {
+    // 阻止默认行为和事件冒泡
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    
+    // 保存当前滚动位置
+    window.savedScrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+    
+    const modal = document.getElementById('pdfModal');
+    const viewer = document.getElementById('pdfViewer');
+    const title = document.getElementById('pdfTitle');
+    
+    // 设置PDF路径 - 直接使用传入的完整路径
+    const pdfPath = pdfFileName;
+    
+    // 设置标题
+    const paperTitles = {
+        'assets/papers/paper1.pdf': 'Observer-based adaptive super-twisting fast terminal sliding mode control',
+        'assets/papers/paper2.pdf': 'Bearing fault diagnosis using joint features extraction'
+    };
+    
+    title.textContent = paperTitles[pdfFileName] || 'PDF预览';
+    
+    // 清除之前的内容
+    const existingLoading = document.getElementById('pdfLoading');
+    if (existingLoading) {
+        existingLoading.remove();
+    }
+    
+    // 显示加载状态
+    viewer.style.display = 'none';
+    const loadingDiv = document.createElement('div');
+    loadingDiv.id = 'pdfLoading';
+    loadingDiv.innerHTML = `
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: #666;">
+            <i class="fas fa-spinner fa-spin" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+            <p>正在加载PDF文件...</p>
+        </div>
+    `;
+    document.querySelector('.pdf-modal-body').appendChild(loadingDiv);
+    
+    // 设置iframe源
+    viewer.src = pdfPath;
+    
+    // 监听加载完成
+    viewer.onload = function() {
+        const loading = document.getElementById('pdfLoading');
+        if (loading) {
+            loading.remove();
+        }
+        viewer.style.display = 'block';
+    };
+    
+    // 监听加载错误
+    viewer.onerror = function() {
+        const loading = document.getElementById('pdfLoading');
+        if (loading) {
+            loading.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: #e74c3c;">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                    <p>PDF文件加载失败</p>
+                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">请检查文件是否存在或稍后重试</p>
+                    <div style="margin-top: 1rem;">
+                        <a href="${pdfPath}" target="_blank" style="color: #2563eb; text-decoration: none;">
+                            <i class="fas fa-external-link-alt"></i> 在新窗口中打开PDF
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+    };
+    
+    // 添加超时检查，如果3秒后还没加载完成，提供备用选项
+    setTimeout(() => {
+        const loading = document.getElementById('pdfLoading');
+        if (loading && loading.innerHTML.includes('正在加载')) {
+            loading.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: #666;">
+                    <i class="fas fa-clock" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                    <p>PDF加载时间较长</p>
+                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">您可以选择在新窗口中打开</p>
+                    <div style="margin-top: 1rem;">
+                        <a href="${pdfPath}" target="_blank" style="color: #2563eb; text-decoration: none; padding: 0.5rem 1rem; border: 1px solid #2563eb; border-radius: 4px;">
+                            <i class="fas fa-external-link-alt"></i> 在新窗口中打开PDF
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+    }, 3000);
+    
+    // 显示模态框
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    
+    // 确保页面不滚动
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${window.savedScrollPosition}px`;
+    document.body.style.width = '100%';
+}
 
+function closePDFViewer() {
+    const modal = document.getElementById('pdfModal');
+    const viewer = document.getElementById('pdfViewer');
+    const loading = document.getElementById('pdfLoading');
+    
+    // 隐藏模态框
+    modal.style.display = 'none';
+    
+    // 恢复页面滚动
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    document.body.style.overflow = 'auto';
+    
+    // 恢复滚动位置
+    window.scrollTo(0, window.savedScrollPosition);
+    
+    // 清空iframe和加载状态
+    viewer.src = '';
+    viewer.style.display = 'block';
+    if (loading) {
+        loading.remove();
+    }
+}
+
+// 点击模态框外部关闭
+document.addEventListener('click', function(event) {
+    const modal = document.getElementById('pdfModal');
+    if (event.target === modal) {
+        closePDFViewer();
+    }
+});
+
+// ESC键关闭模态框
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closePDFViewer();
+    }
+});
 
 // 添加CSS类用于活动导航链接
 const style = document.createElement('style');
@@ -270,7 +412,135 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
+// 引用数据
+const citationData = {
+    paper1: {
+        gb: "Han S, Zhang S, Li J, Zhao Z. Observer-based adaptive super-twisting fast terminal sliding mode control for attitude of quadrotor with mismatched disturbances[J]. Proceedings of the Institution of Mechanical Engineers, Part I: Journal of Systems and Control Engineering, 2025, 239(5): 881-891.",
+        bibtex: `@article{Han2025Observer,
+  title={Observer-based adaptive super-twisting fast terminal sliding mode control for attitude of quadrotor with mismatched disturbances},
+  author={Han, Shuzhen and Zhang, Shanshan and Li, Jianfei and Zhao, Zhanshan},
+  journal={Proceedings of the Institution of Mechanical Engineers, Part I: Journal of Systems and Control Engineering},
+  volume={239},
+  number={5},
+  pages={881--891},
+  year={2025},
+  publisher={SAGE Publications Sage UK: London, England},
+  doi={10.1177/09596518241300676}
+}`,
+        apa: "Han, S., Zhang, S., Li, J., & Zhao, Z. (2025). Observer-based adaptive super-twisting fast terminal sliding mode control for attitude of quadrotor with mismatched disturbances. Proceedings of the Institution of Mechanical Engineers, Part I: Journal of Systems and Control Engineering, 239(5), 881-891. https://doi.org/10.1177/09596518241300676"
+    },
+    paper2: {
+        gb: "Han S, Li J, Pang K, Zhen D, Feng G, Tian F, Niu P. Bearing fault diagnosis using joint features extraction with multi-scale residual convolutional neural network and transformer[J]. Measurement Science and Technology, 2025, 36(5): 056108.",
+        bibtex: `@article{Han_2025,
+  doi = {10.1088/1361-6501/adc761},
+  url = {https://dx.doi.org/10.1088/1361-6501/adc761},
+  year = {2025},
+  month = {apr},
+  publisher = {IOP Publishing},
+  volume = {36},
+  number = {5},
+  pages = {056108},
+  author = {Han, Shuzhen and Li, Jianfei and Pang, Ke and Zhen, Dong and Feng, Guojin and Tian, Fujun and Niu, Pingjuan},
+  title = {Bearing fault diagnosis using joint features extraction with multi-scale residual convolutional neural network and transformer},
+  journal = {Measurement Science and Technology},
+  abstract = {In recent years, deep learning has shown significant potential in bearing fault diagnosis. However, challenges remain, including suboptimal signal quality under intricate conditions and the impact of network architecture on model performance. This study proposes a joint feature extraction method that combines a multi-scale residual convolutional neural network with a position-encoded transformer and integrating a transfer learning (TL) strategy to address the aforementioned issues. First, multi-scale convolutional layers are utilized to capture the details and local features from raw signals. To complement this, a transformer with embedded positional encoding learns global dependencies while retaining position information, effectively compensating the position shift issue. To further enhance the model's generalization capability, a data augmentation strategy is designed and implemented, diversifying the training data. Furthermore, a TL strategy predicated on model fine-tuning is applied to mitigate the reliance on a substantial quantity of labeled data. Experiments conducted on two datasets, including Case Western Reserve University (CWRU) dataset and Self-Collected two-stage gear drive test bench dataset, that featuring diverse working conditions and bearing types. The proposed model achieved 99.92% accuracy on the CWRU dataset and demonstrated strong robustness across different operating conditions. With a model size of approximately 1.45MB, it maintains high diagnostic performance while ensuring computational efficiency. This intelligent diagnosis technique can also be applied to other rotating machinery, such as wind power, locomotive and various other fields owing to its robust feature extraction abilities.}
+}`,
+        apa: "Han, S., Li, J., Pang, K., Zhen, D., Feng, G., Tian, F., & Niu, P. (2025). Bearing fault diagnosis using joint features extraction with multi-scale residual convolutional neural network and transformer. Measurement Science and Technology, 36(5), 056108. https://doi.org/10.1088/1361-6501/adc761"
+    }
+};
 
+// 显示引用模态框
+function showCitation(paperId) {
+    const modal = document.getElementById('citationModal');
+    const citation = citationData[paperId];
+    
+    if (!citation) {
+        console.error('Citation data not found for paper:', paperId);
+        return;
+    }
+    
+    // 设置引用文本
+    document.getElementById('gbText').textContent = citation.gb;
+    document.getElementById('bibtexText').textContent = citation.bibtex;
+    document.getElementById('apaText').textContent = citation.apa;
+    
+    // 显示模态框
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    
+    // 添加点击背景关闭功能
+    modal.onclick = function(event) {
+        if (event.target === modal) {
+            closeCitationModal();
+        }
+    };
+}
+
+// 关闭引用模态框
+function closeCitationModal() {
+    const modal = document.getElementById('citationModal');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+// 复制引用文本
+function copyCitation(elementId) {
+    const element = document.getElementById(elementId);
+    const text = element.textContent || element.innerText;
+    
+    // 创建临时textarea元素
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    
+    try {
+        document.execCommand('copy');
+        showCopySuccess();
+    } catch (err) {
+        console.error('无法复制文本:', err);
+        // 尝试使用现代API
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(text).then(() => {
+                showCopySuccess();
+            }).catch(err => {
+                console.error('复制失败:', err);
+            });
+        }
+    }
+    
+    document.body.removeChild(textarea);
+}
+
+// 显示复制成功提示
+function showCopySuccess() {
+    // 移除已存在的提示
+    const existingToast = document.querySelector('.copy-success');
+    if (existingToast) {
+        existingToast.remove();
+    }
+    
+    // 创建新的提示
+    const toast = document.createElement('div');
+    toast.className = 'copy-success';
+    toast.textContent = '复制成功！ | Copied!';
+    document.body.appendChild(toast);
+    
+    // 3秒后自动移除
+    setTimeout(() => {
+        if (toast.parentNode) {
+            toast.parentNode.removeChild(toast);
+        }
+    }, 3000);
+}
+
+// 添加键盘事件监听（ESC关闭模态框）
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeCitationModal();
+        closePDFViewer();
+    }
+});
 
 // GitHub API 集成
 const GITHUB_USERNAME = 'lwLiang1'; // 您的GitHub用户名
