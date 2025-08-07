@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64" height="64" viewBox="0 0 64 64"
+     xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Geek Icon">
+  <!-- 背景圆角矩形 -->
+  <rect x="2" y="2" width="60" height="60" rx="12"
+        fill="#1e1e1e" stroke="#00ff99" stroke-width="2"/>
+  <!-- 眼镜框（极客元素） -->
+  <g stroke="#00ff99" stroke-width="2" fill="none" stroke-linecap="round">
+    <!-- 左镜片 -->
+    <rect x="14" y="22" width="14" height="14" rx="3"/>
+    <!-- 右镜片 -->
+    <rect x="36" y="22" width="14" height="14" rx="3"/>
+    <!-- 镜架连接 -->
+    <line x1="28" y1="29" x2="36" y2="29"/>
+  </g>
+  <!-- 中央 < /> 符号 -->
+  <g fill="#00ff99">
+    <path d="M24 42 L18 32 L24 22" />  <!-- 左尖括号 -->
+    <rect x="29" y="22" width="6" height="20" rx="1"/> <!-- 竖线 -->
+    <path d="M40 22 L46 32 L40 42" />  <!-- 右尖括号 -->
+  </g>
+</svg>
