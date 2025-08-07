@@ -19,25 +19,10 @@
 }
 
 body {
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-  /* 多层、多色渐变叠加 */
-  background: 
-    linear-gradient(120deg, #aee9f7 0%, #533cff 40%, #e180fc 70%, #232837 100%),
-    linear-gradient(45deg, #facc15 0%, #f472b6 60%, #67e8f9 100%);
-  background-blend-mode: screen;
-  background-size: 400% 400%;
-  animation: gradientBG 16s linear infinite;
-  transition: background 0.3s;
-}
-
- @keyframes gradientBG {
-  0% { background-position: 0% 50%, 100% 50%; }
-  25% { background-position: 50% 100%, 75% 0%; }
-  50% { background-position: 100% 50%, 0% 100%; }
-  75% { background-position: 50% 0%, 25% 100%; }
-  100% { background-position: 0% 50%, 100% 50%; }
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
 }
 
 .container {
@@ -48,13 +33,14 @@ body {
 
 /* 导航栏样式 */
 .navbar {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: var(--bg-color);
     border-bottom: 1px solid var(--border-color);
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000;
     backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.95);
 }
 
 .nav-container {
@@ -80,7 +66,7 @@ body {
 
 .nav-link {
     text-decoration: none;
-    color: #000000;
+    color: var(--text-color);
     font-weight: 500;
     transition: color 0.3s ease;
 }
@@ -121,14 +107,14 @@ main {
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 3rem;
-    color: #ffffff;
+    color: var(--text-color);
 }
 
 /* 个人简介部分 */
 .hero {
     padding: 120px 0;
-    background: transparent;
-    color: var(--text-color);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
 }
 
 .hero-content {
@@ -142,14 +128,12 @@ main {
     font-size: 3.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
-    color: #000000;
 }
 
 .hero-subtitle {
     font-size: 1.5rem;
     margin-bottom: 2rem;
     opacity: 0.9;
-    color: #333333;
 }
 
 .hero-description {
@@ -252,7 +236,7 @@ main {
 }
 
 .research-card {
-    background: rgba(255, 255, 255, 0.8);
+    background: white;
     padding: 1.5rem;
     border-radius: 12px;
     box-shadow: var(--shadow);
@@ -281,11 +265,11 @@ main {
 .research-card h3 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
-    color: #000000;
+    color: var(--text-color);
 }
 
 .research-card p {
-    color: #333333;
+    color: var(--text-light);
     line-height: 1.8;
 }
 
@@ -296,12 +280,10 @@ main {
 }
 
 .publication-item {
-    background: transparent;
     display: flex;
     gap: 2rem;
     margin-bottom: 2rem;
-    padding: 2rem;
-    border-radius: 12px;
+    padding-bottom: 2rem;
     border-bottom: 1px solid var(--border-color);
 }
 
@@ -514,7 +496,7 @@ main {
 }
 
 .contact-item {
-    background: rgba(255, 255, 255, 0.8);
+    background: #f5f5f7;
     border-radius: 12px;
     padding: 2rem 1.5rem;
     text-align: center;
@@ -540,7 +522,7 @@ main {
 
 .contact-item h3 {
     margin: 0 0 1rem 0;
-    color: #000000;
+    color: var(--text-color);
     font-size: 1rem;
     font-weight: 600;
     line-height: 1.2;
@@ -551,7 +533,7 @@ main {
 .contact-item p {
     margin: 0;
     font-size: 0.85rem;
-    color: #333333;
+    color: var(--text-light);
     word-wrap: break-word;
     overflow-wrap: break-word;
     line-height: 1.3;
@@ -845,7 +827,7 @@ main {
 }
 
 .stat-card {
-    background: rgba(255, 255, 255, 0.8);
+    background: white;
     padding: 2rem;
     border-radius: 12px;
     box-shadow: var(--shadow);
@@ -883,22 +865,12 @@ main {
 }
 
 .repo-card {
-    background: rgba(255, 255, 255, 0.8);
+    background: white;
     padding: 2rem;
     border-radius: 12px;
     box-shadow: var(--shadow);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-left: 4px solid var(--primary-color);
-}
-
-.future-card {
-    background: transparent;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-    display: flex;
-    align-items: center;
-    gap: 2rem;
 }
 
 .repo-card:hover {
@@ -1254,4 +1226,242 @@ html {
 ::selection {
     background-color: var(--primary-color);
     color: white;
+}
+
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* 英文名样式 */
+.english-name {
+    font-size: 0.8em;
+    opacity: 0.8;
+    font-weight: 400;
+}
+
+/* 描述英文样式 */
+.description.english {
+    font-size: 0.9em;
+    opacity: 0.8;
+    margin-top: 1rem;
+}
+
+/* 导航栏英文样式 */
+.nav-link span {
+    font-size: 0.8em;
+    opacity: 0.8;
+}
+
+/* 引用按钮样式 */
+.citation-btn {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    padding: 0.5rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: inherit;
+}
+
+.citation-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* 复制成功提示 */
+.copy-success {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 6px;
+    z-index: 3000;
+    animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* 引用模态框样式 */
+.citation-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+}
+
+.citation-modal-content {
+    background-color: var(--bg-color);
+    margin: 5% auto;
+    padding: 0;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 800px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.citation-modal-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 1.5rem 2rem;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.citation-modal-header h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.citation-modal-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.citation-modal-close:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.citation-modal-body {
+    padding: 2rem;
+}
+
+.citation-format {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: var(--bg-light);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.citation-format h4 {
+    margin: 0 0 1rem 0;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.citation-text {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    border-left: 4px solid var(--primary-color);
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.citation-text p {
+    margin: 0;
+    color: var(--text-color);
+}
+
+.citation-text pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: var(--text-color);
+    font-size: 0.85rem;
+}
+
+.copy-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+.copy-btn:hover {
+    background-color: var(--secondary-color);
+}
+
+.copy-btn:active {
+    transform: scale(0.98);
+}
+
+/* 近期去向部分 */
+.future-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.future-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 2rem;
 }
