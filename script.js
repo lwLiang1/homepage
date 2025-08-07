@@ -415,10 +415,10 @@ document.head.appendChild(style);
 // 引用数据
 const citationData = {
     paper1: {
-        gb: "Han S, Zhang S, Li J, Zhao Z. Observer-based adaptive super-twisting fast terminal sliding mode control for attitude of quadrotor with mismatched disturbances[J]. Proceedings of the Institution of Mechanical Engineers, Part I: Journal of Systems and Control Engineering, 2025, 239(5): 881-891.",
+        gb: "Han S, Zhang S, Liang L, Zhao Z. Observer-based adaptive super-twisting fast terminal sliding mode control for attitude of quadrotor with mismatched disturbances[J]. Proceedings of the Institution of Mechanical Engineers, Part I: Journal of Systems and Control Engineering, 2025, 239(5): 881-891.",
         bibtex: `@article{Han2025Observer,
   title={Observer-based adaptive super-twisting fast terminal sliding mode control for attitude of quadrotor with mismatched disturbances},
-  author={Han, Shuzhen and Zhang, Shanshan and Li, Jianfei and Zhao, Zhanshan},
+  author={Han, Shuzhen and Zhang, Shanshan and Liang, Lewen and Zhao, Zhanshan},
   journal={Proceedings of the Institution of Mechanical Engineers, Part I: Journal of Systems and Control Engineering},
   volume={239},
   number={5},
@@ -427,10 +427,10 @@ const citationData = {
   publisher={SAGE Publications Sage UK: London, England},
   doi={10.1177/09596518241300676}
 }`,
-        apa: "Han, S., Zhang, S., Li, J., & Zhao, Z. (2025). Observer-based adaptive super-twisting fast terminal sliding mode control for attitude of quadrotor with mismatched disturbances. Proceedings of the Institution of Mechanical Engineers, Part I: Journal of Systems and Control Engineering, 239(5), 881-891. https://doi.org/10.1177/09596518241300676"
+        apa: "Han, S., Zhang, S., Liang, L., & Zhao, Z. (2025). Observer-based adaptive super-twisting fast terminal sliding mode control for attitude of quadrotor with mismatched disturbances. Proceedings of the Institution of Mechanical Engineers, Part I: Journal of Systems and Control Engineering, 239(5), 881-891. https://doi.org/10.1177/09596518241300676"
     },
     paper2: {
-        gb: "Han S, Li J, Pang K, Zhen D, Feng G, Tian F, Niu P. Bearing fault diagnosis using joint features extraction with multi-scale residual convolutional neural network and transformer[J]. Measurement Science and Technology, 2025, 36(5): 056108.",
+        gb: "Han S, Liang L, Pang K, Zhen D, Feng G, Tian F, Niu P. Bearing fault diagnosis using joint features extraction with multi-scale residual convolutional neural network and transformer[J]. Measurement Science and Technology, 2025, 36(5): 056108.",
         bibtex: `@article{Han_2025,
   doi = {10.1088/1361-6501/adc761},
   url = {https://dx.doi.org/10.1088/1361-6501/adc761},
@@ -440,12 +440,12 @@ const citationData = {
   volume = {36},
   number = {5},
   pages = {056108},
-  author = {Han, Shuzhen and Li, Jianfei and Pang, Ke and Zhen, Dong and Feng, Guojin and Tian, Fujun and Niu, Pingjuan},
+  author = {Han, Shuzhen and Liang, Lewen and Pang, Ke and Zhen, Dong and Feng, Guojin and Tian, Fujun and Niu, Pingjuan},
   title = {Bearing fault diagnosis using joint features extraction with multi-scale residual convolutional neural network and transformer},
   journal = {Measurement Science and Technology},
   abstract = {In recent years, deep learning has shown significant potential in bearing fault diagnosis. However, challenges remain, including suboptimal signal quality under intricate conditions and the impact of network architecture on model performance. This study proposes a joint feature extraction method that combines a multi-scale residual convolutional neural network with a position-encoded transformer and integrating a transfer learning (TL) strategy to address the aforementioned issues. First, multi-scale convolutional layers are utilized to capture the details and local features from raw signals. To complement this, a transformer with embedded positional encoding learns global dependencies while retaining position information, effectively compensating the position shift issue. To further enhance the model's generalization capability, a data augmentation strategy is designed and implemented, diversifying the training data. Furthermore, a TL strategy predicated on model fine-tuning is applied to mitigate the reliance on a substantial quantity of labeled data. Experiments conducted on two datasets, including Case Western Reserve University (CWRU) dataset and Self-Collected two-stage gear drive test bench dataset, that featuring diverse working conditions and bearing types. The proposed model achieved 99.92% accuracy on the CWRU dataset and demonstrated strong robustness across different operating conditions. With a model size of approximately 1.45MB, it maintains high diagnostic performance while ensuring computational efficiency. This intelligent diagnosis technique can also be applied to other rotating machinery, such as wind power, locomotive and various other fields owing to its robust feature extraction abilities.}
 }`,
-        apa: "Han, S., Li, J., Pang, K., Zhen, D., Feng, G., Tian, F., & Niu, P. (2025). Bearing fault diagnosis using joint features extraction with multi-scale residual convolutional neural network and transformer. Measurement Science and Technology, 36(5), 056108. https://doi.org/10.1088/1361-6501/adc761"
+        apa: "Han, S., Liang, L., Pang, K., Zhen, D., Feng, G., Tian, F., & Niu, P. (2025). Bearing fault diagnosis using joint features extraction with multi-scale residual convolutional neural network and transformer. Measurement Science and Technology, 36(5), 056108. https://doi.org/10.1088/1361-6501/adc761"
     }
 };
 
