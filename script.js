@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, observerOptions);
 
     // 观察所有卡片元素
-    const cards = document.querySelectorAll('.research-card, .project-card, .contact-item, .publication-item');
+    const cards = document.querySelectorAll('.research-card, .project-card, .contact-item, .publication-item, .honors-card');
     cards.forEach(card => {
         card.style.opacity = '0';
         card.style.transform = 'translateY(30px)';
