@@ -1693,8 +1693,8 @@ html {
 }
 
 
-/* 标题特效 */
-.header {
+/* 标题特效 (修正后) */
+.hero h1.header {
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     font-size: 6rem;
     font-weight: 100;
@@ -1702,9 +1702,12 @@ html {
     text-align: center;
     color: #f35626;
     background-image: -webkit-linear-gradient(92deg, #f35626, #feab3a);
+    background-image: linear-gradient(92deg, #f35626, #feab3a);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     -webkit-animation: hue 10s infinite linear;
+    animation: hue 10s infinite linear;
 }
 
 @-webkit-keyframes hue {
@@ -1714,6 +1717,17 @@ html {
     to {
         -webkit-filter: hue-rotate(-360deg);
     }
+}
+
+@keyframes hue {
+  from {
+    -webkit-filter: hue-rotate(0deg);
+    filter: hue-rotate(0deg);
+  }
+  to {
+    -webkit-filter: hue-rotate(-360deg);
+    filter: hue-rotate(-360deg);
+  }
 }
 
 /* 头像光环 */
@@ -1737,18 +1751,7 @@ html {
   margin: 60px auto;
   text-align: center;
 }
-.current-status-section h2 {
-  font-size: 2.5rem;
-  font-weight: 800;
-  margin-bottom: 44px;
-  letter-spacing: 1px;
-}
-.current-status-section .en-title {
-  font-weight: 500;
-  font-size: 2rem;
-  color: #8996a6;
-  margin-left: 12px;
-}
+
 .status-card {
   display: flex;
   align-items: flex-start;
