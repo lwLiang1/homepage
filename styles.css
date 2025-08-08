@@ -1731,3 +1731,60 @@ html {
     0 0 32px 12px rgba(85, 115, 246, 0.55),
     0 0 56px 24px rgba(170, 80, 255, 0.35);
 }
+
+.current-status-section {
+  max-width: 800px;
+  margin: 60px auto;
+  text-align: center;
+}
+.current-status-section h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 44px;
+  letter-spacing: 1px;
+}
+.current-status-section .en-title {
+  font-weight: 500;
+  font-size: 2rem;
+  color: #8996a6;
+  margin-left: 12px;
+}
+.status-card {
+  display: flex;
+  align-items: flex-start;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 28px 0 rgba(60,70,130,0.09);
+  padding: 32px 48px;
+  margin: 0 auto;
+  max-width: 640px;
+  text-align: left;
+  gap: 28px;
+}
+.status-icon {
+  font-size: 2.2rem;
+  color: #697cfb;
+  margin-top: 6px;
+}
+.status-content {
+  flex: 1;
+}
+.status-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.status-title span {
+  font-weight: 500;
+  color: #5b6e93;
+}
+.status-main {
+  font-size: 1rem;
+  color: #222;
+  margin-bottom: 2px;
+}
+.status-desc {
+  font-size: 1rem;
+  color: #818b99;
+  margin-top: 14px;
+}
