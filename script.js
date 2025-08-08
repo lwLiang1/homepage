@@ -253,8 +253,7 @@ function openPDFViewer(pdfFileName, event) {
     
     // 设置标题
     const paperTitles = {
-        'assets/papers/paper1.pdf': 'Observer-based adaptive super-twisting fast terminal sliding mode control',
-        'assets/papers/paper2.pdf': 'Bearing fault diagnosis using joint features extraction'
+        'assets/papers/paper1.pdf': 'Progress in image recovery technology based on deep neural network'
     };
     
     title.textContent = paperTitles[pdfFileName] || 'PDF预览';
