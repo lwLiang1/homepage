@@ -1732,18 +1732,26 @@ html {
 
 /* 头像光环 */
 .avatar-glow {
-  box-shadow:
-    0 0 24px 8px rgba(85, 115, 246, 0.4), /* 外层蓝色发光 */
-    0 0 36px 12px rgba(170, 80, 255, 0.2); /* 外层紫色淡光 */
   border-radius: 50%;
-  transition: box-shadow 0.3s;
+  box-shadow:
+    /* Inner bright blue glow */
+    0 0 15px 5px rgba(37, 99, 235, 0.6),
+    /* Middle softer purple glow */
+    0 0 30px 15px rgba(124, 58, 237, 0.4),
+    /* Outer faint violet diffusion */
+    0 0 50px 30px rgba(102, 126, 234, 0.2);
+  transition: box-shadow 0.4s ease-in-out;
 }
 
 /* 鼠标悬浮可更亮一点 */
 .avatar-glow:hover {
   box-shadow:
-    0 0 32px 12px rgba(85, 115, 246, 0.55),
-    0 0 56px 24px rgba(170, 80, 255, 0.35);
+    /* Inner bright blue glow - intensified */
+    0 0 20px 8px rgba(37, 99, 235, 0.7),
+    /* Middle softer purple glow - intensified */
+    0 0 40px 20px rgba(124, 58, 237, 0.5),
+    /* Outer faint violet diffusion - intensified */
+    0 0 70px 40px rgba(102, 126, 234, 0.3);
 }
 
 .current-status-section {
