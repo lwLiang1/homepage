@@ -1760,7 +1760,7 @@ html {
   box-shadow: 0 4px 28px 0 rgba(60,70,130,0.09);
   padding: 32px 48px;
   margin: 0 auto;
-  max-width: 640px;
+  max-width: 720px;
   text-align: left;
   gap: 28px;
 }
@@ -1776,6 +1776,13 @@ html {
   font-size: 1.2rem;
   font-weight: 700;
   margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+}
+.status-title i {
+  color: var(--primary-color);
+  margin-right: 10px;
+  font-size: 1.2rem;
 }
 .status-title span {
   font-weight: 500;
