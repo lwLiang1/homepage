@@ -1,359 +1,475 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>梁乐文 (Lewen Liang) - 个人主页</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <meta name="description" content="梁乐文的个人主页，展示研究成果、发表论文、项目经历和近期去向">
-    <meta name="keywords" content="梁乐文,Lewen Liang,个人主页,研究,论文,项目,ORCID,机器学习,深度学习,智能故障诊断,计算机视觉">
-    <meta name="author" content="梁乐文 (Lewen Liang)">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        slate: {
+                            900: '#0f172a',
+                            200: '#e2e8f0',
+                            400: '#94a3b8',
+                        },
+                        teal: {
+                            300: '#5eead4',
+                            400: '#2dd4bf',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #94a3b8;
+            overflow-x: hidden;
+        }
+
+        /* 鼠标跟随聚光灯交互特效 */
+        #spotlight {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background: radial-gradient(
+                600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                rgba(45, 212, 191, 0.15), 
+                transparent 80%
+            );
+        }
+
+        /* 玻璃拟物卡片核心样式 */
+        .glass {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass:hover {
+            transform: translateY(-4px);
+            border-color: rgba(45, 212, 191, 0.3);
+            background: rgba(30, 41, 59, 0.7);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 隐藏滚动条但保留功能 */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2dd4bf;
+        }
+
+        .avatar-glow::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            background: linear-gradient(45deg, #2dd4bf, #0ea5e9);
+            border-radius: 9999px;
+            z-index: -1;
+            opacity: 0.3;
+            filter: blur(10px);
+        }
+    </style>
 </head>
-<body>
+<body class="antialiased selection:bg-teal-400/30 selection:text-teal-300">
+
+    <!-- 鼠标聚光灯层 -->
+    <div id="spotlight"></div>
+
     <!-- 导航栏 -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <h2>Lewen Liang</h2>
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-6">
+        <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
+            <a href="#" class="text-xl font-black tracking-tighter text-slate-200 hover:text-teal-400 transition-colors">
+                LEWEN <span class="text-teal-400">LIANG</span>
+            </a>
+            
+            <div class="hidden md:flex items-center space-x-10 text-xs font-bold uppercase tracking-widest">
+                <a href="#about" class="text-slate-400 hover:text-teal-400 transition-colors">About</a>
+                <a href="#research" class="text-slate-400 hover:text-teal-400 transition-colors">Research</a>
+                <a href="#publications" class="text-slate-400 hover:text-teal-400 transition-colors">Publications</a>
+                <a href="#projects" class="text-slate-400 hover:text-teal-400 transition-colors">Projects</a>
+                <a href="#contact" class="px-5 py-2 bg-teal-400 text-slate-900 rounded-full hover:bg-teal-300 transition-all transform hover:scale-105">Contact</a>
             </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="#about" class="nav-link">
-                        关于我<br>
-                        <span style="font-size: 0.8em; opacity: 0.8;">About me</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#research" class="nav-link">
-                        研究方向<br>
-                        <span style="font-size: 0.8em; opacity: 0.8;">Research</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#publications" class="nav-link">
-                        发表论文<br>
-                        <span style="font-size: 0.8em; opacity: 0.8;">Publications</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#github" class="nav-link">
-                        GitHub项目<br>
-                        <span style="font-size: 0.8em; opacity: 0.8;">GitHub Projects</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#honors" class="nav-link">
-                        荣誉展示<br>
-                        <span style="font-size: 0.8em; opacity: 0.8;">Honors</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#status" class="nav-link">
-                        近期动态<br>
-                        <span style="font-size: 0.8em; opacity: 0.8;">Current status</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#contact" class="nav-link">
-                        联系方式<br>
-                        <span style="font-size: 0.8em; opacity: 0.8;">Contact me</span>
-                    </a>
-                </li>
-            </ul>
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
+
+            <button id="menu-btn" class="md:hidden text-slate-200">
+                <i class="fa-solid fa-bars-staggered text-2xl"></i>
+            </button>
         </div>
     </nav>
 
-    <!-- 主要内容 -->
-    <main>
-        <!-- 头像和介绍部分 -->
-        <section id="about" class="section hero">
-            <div class="container">
-                <div class="hero-content">
-                    <div class="hero-text">
-                        <h1>梁乐文 <span class="english-name">Lewen Liang</span></h1>
-                        <p class="subtitle">天津工业大学 | Tiangong University</p>
-                        <div class="education-info">
-                            <div class="education-item">
-                                <h3>硕士研究生 | Master's Degree</h3>
-                                <p>天津工业大学 · 新一代电子信息技术</p>
-                                <p>Tiangong University · Next-generation Electronic Information Technology</p>
-                                <p class="duration">2025.09 - 2028.06</p>
-                            </div>
-                            <div class="education-item">
-                                <h3>本科 | Bachelor's Degree</h3>
-                                <p>天津工业大学 · 通信工程</p>
-                                <p>Tiangong University · Communication Engineering</p>
-                                <p class="duration">2021.09 - 2025.06</p>
-                            </div>
-                        </div>
-                        <p class="description">
-                            专注于机器学习、深度学习、智能故障诊断和计算机视觉领域的研究。致力于将先进的人工智能技术应用于实际工程问题的解决。
+    <main class="relative z-10 pt-32">
+        <!-- Hero Section -->
+        <section id="about" class="min-h-[80vh] flex flex-col justify-center px-6 reveal">
+            <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+                <div class="order-2 md:order-1 text-center md:text-left">
+                    <h2 class="text-teal-400 font-bold tracking-[0.2em] uppercase mb-6 text-xs">Research Portfolio</h2>
+                    <h1 class="text-5xl md:text-8xl font-black text-slate-200 mb-8 leading-none tracking-tighter">
+                        梁乐文 <br>
+                        <span class="text-slate-400/50">Lewen Liang</span>
+                    </h1>
+                    <div class="space-y-6 text-slate-400 text-lg leading-relaxed max-w-xl">
+                        <p class="border-l-4 border-teal-400 pl-6 py-2 bg-teal-400/5 rounded-r-xl">
+                            <span class="text-slate-200 font-bold">天津工业大学</span> · 硕士研究生<br>
+                            <span class="text-sm text-slate-500 uppercase tracking-widest">2025.09 - 2028.06</span>
                         </p>
-                        <p class="description english">
-                            Focusing on research in machine learning, deep learning, intelligent fault diagnosis, and computer vision. Dedicated to applying advanced AI technologies to solve real-world engineering problems.
+                        <p>
+                            专注于机器学习、深度学习、<span class="text-teal-300">智能故障诊断</span>及计算机视觉研究。致力于将先进 AI 算法应用于复杂工程问题的解决。
                         </p>
                     </div>
-                    <div class="hero-image">
-                        <img src="assets/profile.jpg" alt="梁乐文 (Lewen Liang)" class="profile-img avatar-glow">
+                    <div class="mt-12 flex flex-wrap gap-6 justify-center md:justify-start items-center">
+                        <a href="#publications" class="px-10 py-4 bg-slate-200 text-slate-900 rounded-full font-black hover:bg-teal-400 transition-all flex items-center group">
+                            READ PAPERS
+                            <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-2 transition-transform"></i>
+                        </a>
+                        <div class="flex items-center space-x-6 text-2xl">
+                            <a href="https://github.com/lwLiang1" target="_blank" class="hover:text-teal-400 transition-colors"><i class="fa-brands fa-github"></i></a>
+                            <a href="mailto:lianglewen161@gmail.com" class="hover:text-teal-400 transition-colors"><i class="fa-solid fa-envelope"></i></a>
+                            <a href="#" onclick="copyText('a13021357275')" class="hover:text-teal-400 transition-colors"><i class="fa-brands fa-weixin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2 flex justify-center">
+                    <div class="relative w-72 h-72 md:w-96 md:h-96 avatar-glow">
+                        <img src="assets/profile.jpg" alt="Profile" class="rounded-full w-full h-full object-cover border-8 border-slate-900 shadow-2xl transition-all duration-1000">
+                        <div class="absolute inset-0 rounded-full border-2 border-teal-400/20 animate-[spin_10s_linear_infinite]"></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 研究方向部分 -->
-        <section id="research" class="section">
-            <div class="container">
-                <h2 class="section-title">研究方向 | Research Directions</h2>
-                <div class="research-grid">
-                    <div class="research-card">
-                        <div class="research-icon">
-                            <i class="fas fa-tools"></i>
+        <!-- Research Grid -->
+        <section id="research" class="py-32 px-6 reveal">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex items-center space-x-6 mb-20">
+                    <h2 class="text-4xl font-black text-slate-200 tracking-tighter italic">RESEARCH</h2>
+                    <div class="h-px flex-1 bg-gradient-to-r from-teal-400/50 to-transparent"></div>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="glass p-10 rounded-[2.5rem] group">
+                        <div class="w-16 h-16 bg-teal-400/10 rounded-2xl flex items-center justify-center mb-8 text-teal-400 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-tools text-2xl"></i>
                         </div>
-                        <h3>智能故障诊断 | Intelligent Fault Diagnosis</h3>
-                        <p>基于机器学习和深度学习的智能故障诊断系统，专注于轴承故障诊断。</p>
+                        <h3 class="text-xl font-bold text-slate-200 mb-4">智能故障诊断</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">专注于轴承故障的精准识别与健康评估，利用深度神经网络提取机械振动信号中的关键特征。</p>
                     </div>
-                    <div class="research-card">
-                        <div class="research-icon">
-                            <i class="fas fa-eye"></i>
+                    <div class="glass p-10 rounded-[2.5rem] group">
+                        <div class="w-16 h-16 bg-teal-400/10 rounded-2xl flex items-center justify-center mb-8 text-teal-400 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-eye text-2xl"></i>
                         </div>
-                        <h3>计算机视觉 | Computer Vision</h3>
-                        <p>计算机视觉算法研究，包括图像识别、目标检测、图像分割等技术。</p>
+                        <h3 class="text-xl font-bold text-slate-200 mb-4">计算机视觉</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">深入探索扩散模型 (Diffusion Models) 与图像恢复技术，涵盖目标检测、分割及超分辨率重建。</p>
                     </div>
-                    <div class="research-card">
-                        <div class="research-icon">
-                            <i class="fas fa-helicopter"></i>
+                    <div class="glass p-10 rounded-[2.5rem] group">
+                        <div class="w-16 h-16 bg-teal-400/10 rounded-2xl flex items-center justify-center mb-8 text-teal-400 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-helicopter text-2xl"></i>
                         </div>
-                        <h3>飞行器控制 | Aircraft Control</h3>
-                        <p>四旋翼飞行器姿态控制系统，包括观测器设计、自适应控制、滑模控制。</p>
+                        <h3 class="text-xl font-bold text-slate-200 mb-4">飞行器控制</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">致力于四旋翼姿态控制算法研究，涉及观测器设计、自适应控制及滑模控制系统的鲁棒性优化。</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 发表论文部分 -->
-        <section id="publications" class="section bg-light">
-            <div class="container">
-                <h2 class="section-title">发表论文 | Publications</h2>
-                <div class="publications-stats" style="text-align: center; margin-bottom: 3rem;">
-                    <div style="display: inline-flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
-                        <div class="stat-item" style="text-align: center;">
-                            <div style="font-size: 2rem; font-weight: bold; color: var(--primary-color);">1</div>
-                            <div style="color: var(--text-light); font-size: 0.9rem;">发表论文 | Publications</div>
-                        </div>
-                        <div class="stat-item" style="text-align: center;">
-                            <div style="font-size: 2rem; font-weight: bold; color: var(--primary-color);">0</div>
-                            <div style="color: var(--text-light); font-size: 0.9rem;">SCI期刊 | SCI Journals</div>
-                        </div>
-                        <div class="stat-item" style="text-align: center;">
-                            <div style="font-size: 2rem; font-weight: bold; color: var(--primary-color);">1</div>
-                            <div style="color: var(--text-light); font-size: 0.9rem;">会议 | Conferences</div>
-                        </div>
-                    </div>
+        <!-- Publications -->
+        <section id="publications" class="py-32 px-6 reveal">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex items-center space-x-6 mb-20">
+                    <h2 class="text-4xl font-black text-slate-200 tracking-tighter italic">PUBLICATIONS</h2>
+                    <div class="h-px flex-1 bg-gradient-to-r from-teal-400/50 to-transparent"></div>
                 </div>
-                <div class="publications-list">
-                    <div class="publication-item">
-                        <div class="publication-year">2024</div>
-                        <div class="publication-content">
-                            <h3 class="publication-title">Progress in image recovery technology based on deep neural network</h3>
-                            <p class="publication-authors">Jie Wang, Yiwei Shi, and <strong>Lewen Liang</strong></p>
-                            <p class="publication-venue">The 4th International Conference on Electronics, Electrical and Information Engineering (ICEEIE 2024)</p>
-                            <div class="publication-links">
-                                <a href="https://dx.doi.org/10.1117/12.3052149" target="_blank" class="pub-link">
-                                    <i class="fas fa-external-link-alt"></i>
-                                    DOI
-                                </a>
-                                <a href="javascript:void(0)" onclick="openPDFViewer('assets/papers/paper1.pdf', event)" class="pub-link">
-                                    <i class="fas fa-file-pdf"></i>
-                                    PDF预览
-                                </a>
-                                <a href="assets/papers/paper1.pdf" download class="pub-link">
-                                    <i class="fas fa-download"></i>
-                                    下载PDF
-                                </a>
-                                <a href="javascript:void(0)" onclick="showCitation('paper1')" class="pub-link">
-                                    <i class="fas fa-quote-left"></i>
-                                    引用
-                                </a>
+
+                <div class="space-y-8">
+                    <div class="glass p-10 rounded-[3rem] group relative overflow-hidden">
+                        <div class="flex flex-col md:flex-row gap-10">
+                            <div class="text-teal-400 font-black text-4xl opacity-20">01</div>
+                            <div class="flex-1">
+                                <h3 class="text-2xl font-bold text-slate-200 mb-4 group-hover:text-teal-300 transition-colors">Progress in image recovery technology based on deep neural network</h3>
+                                <p class="text-slate-400 mb-6 text-lg">Jie Wang, Yiwei Shi, and <strong class="text-slate-200">Lewen Liang</strong></p>
+                                <div class="flex items-center text-sm text-slate-500 italic mb-10">
+                                    <i class="fa-solid fa-calendar-day mr-3 text-teal-400/50"></i> 
+                                    The 4th International Conference on Electronics, Electrical and Information Engineering (ICEEIE 2024)
+                                </div>
+                                <div class="flex flex-wrap gap-4">
+                                    <a href="https://dx.doi.org/10.1117/12.3052149" target="_blank" class="px-6 py-2 bg-slate-800 hover:bg-teal-400 hover:text-slate-900 rounded-full text-xs font-bold transition-all flex items-center">
+                                        <i class="fa-solid fa-link mr-2"></i> DOI
+                                    </a>
+                                    <button onclick="openPDF('assets/papers/paper1.pdf')" class="px-6 py-2 bg-slate-800 hover:bg-teal-400 hover:text-slate-900 rounded-full text-xs font-bold transition-all flex items-center">
+                                        <i class="fa-solid fa-eye mr-2"></i> PREVIEW
+                                    </button>
+                                    <button onclick="showCitation()" class="px-6 py-2 border border-teal-400/30 text-teal-400 hover:bg-teal-400 hover:text-slate-900 rounded-full text-xs font-bold transition-all flex items-center">
+                                        <i class="fa-solid fa-quote-left mr-2"></i> CITE
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- 更多论文可以在这里添加 | More publications can be added here -->
                 </div>
             </div>
         </section>
 
-        <!-- GitHub项目展示 -->
-        <section id="github" class="section">
-            <div class="container">
-                <h2 class="section-title">GitHub项目 | GitHub Repositories</h2>
-                <div class="github-content">
-                    <div class="github-stats">
-                        <div class="stat-card">
-                            <i class="fab fa-github"></i>
-                            <h3>公共仓库</h3>
-                            <p id="public-repos">-</p>
-                        </div>
-                        <div class="stat-card">
-                            <i class="fas fa-star"></i>
-                            <h3>获得Stars</h3>
-                            <p id="total-stars">-</p>
-                        </div>
-                        <div class="stat-card">
-                            <i class="fas fa-code-branch"></i>
-                            <h3>Forks</h3>
-                            <p id="total-forks">-</p>
-                        </div>
+        <!-- GitHub Repos -->
+        <section id="projects" class="py-32 px-6 reveal">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex justify-between items-center mb-20">
+                    <div class="flex items-center space-x-6">
+                        <h2 class="text-4xl font-black text-slate-200 tracking-tighter italic">PROJECTS</h2>
+                        <div class="h-px w-32 bg-teal-400/50"></div>
                     </div>
-                    <div class="github-repos" id="github-repos">
-                        <!-- 动态加载GitHub仓库 -->
-                        <div class="loading">正在加载GitHub仓库...</div>
-                    </div>
+                    <a href="https://github.com/lwLiang1" target="_blank" class="text-teal-400 text-sm font-bold hover:underline">VIEW ALL REPOS &rarr;</a>
+                </div>
+
+                <div id="github-repos" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Skeleton -->
+                    <div class="animate-pulse glass p-8 rounded-3xl h-60"></div>
+                    <div class="animate-pulse glass p-8 rounded-3xl h-60"></div>
+                    <div class="animate-pulse glass p-8 rounded-3xl h-60"></div>
                 </div>
             </div>
         </section>
 
-        <!-- 荣誉展示部分 -->
-        <section id="honors" class="section bg-light">
-            <div class="container">
-                <h2 class="section-title">荣誉展示 | Honors</h2>
-                <div class="honors-grid">
-                    <div class="honors-card">
-                        <div class="honors-icon">
-                            <i class="fas fa-award"></i>
-                        </div>
-                        <h3>校级奖学金</h3>
-                        <p>2024年</p>
+        <!-- Honors -->
+        <section id="honors" class="py-32 px-6 reveal">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex items-center space-x-6 mb-20">
+                    <h2 class="text-4xl font-black text-slate-200 tracking-tighter italic">HONORS</h2>
+                    <div class="h-px flex-1 bg-gradient-to-r from-teal-400/50 to-transparent"></div>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="glass p-8 rounded-[2rem] text-center group">
+                        <i class="fas fa-award text-3xl text-teal-400 mb-4 group-hover:scale-125 transition-transform block"></i>
+                        <p class="text-slate-200 font-bold text-sm">校级奖学金</p>
+                        <p class="text-slate-500 text-[10px] uppercase mt-2">Scholarship 2024</p>
                     </div>
-                    <div class="honors-card">
-                        <div class="honors-icon">
-                            <i class="fas fa-user-tie"></i>
-                        </div>
-                        <h3>“优秀学生干部”荣誉称号</h3>
-                        <p>2024年</p>
+                    <div class="glass p-8 rounded-[2rem] text-center group">
+                        <i class="fas fa-user-tie text-3xl text-teal-400 mb-4 group-hover:scale-125 transition-transform block"></i>
+                        <p class="text-slate-200 font-bold text-sm">优秀学生干部</p>
+                        <p class="text-slate-500 text-[10px] uppercase mt-2">Leader 2024</p>
                     </div>
-                    <div class="honors-card">
-                        <div class="honors-icon">
-                            <i class="fas fa-trophy"></i>
-                        </div>
-                        <h3>中国创新创业大赛产业赛道省级银奖</h3>
-                        <p>2025年</p>
+                    <div class="glass p-8 rounded-[2rem] text-center group">
+                        <i class="fas fa-trophy text-3xl text-teal-400 mb-4 group-hover:scale-125 transition-transform block"></i>
+                        <p class="text-slate-200 font-bold text-sm">创新大赛银奖</p>
+                        <p class="text-slate-500 text-[10px] uppercase mt-2">Silver Award 2025</p>
                     </div>
-                    <div class="honors-card">
-                        <div class="honors-icon">
-                            <i class="fas fa-medal"></i>
-                        </div>
-                        <h3>天津工业大学第十九届“创兴杯”一等奖</h3>
-                        <p>2024年</p>
+                    <div class="glass p-8 rounded-[2rem] text-center group">
+                        <i class="fas fa-medal text-3xl text-teal-400 mb-4 group-hover:scale-125 transition-transform block"></i>
+                        <p class="text-slate-200 font-bold text-sm">创兴杯一等奖</p>
+                        <p class="text-slate-500 text-[10px] uppercase mt-2">First Prize 2024</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 近期动态 | Current status -->
-        <section id="status" class="section current-status-section">
-          <h2 class="section-title">近期动态 | <span class="en-title">Current status</span></h2>
-          <div class="status-card">
-            <div class="status-icon"></div>
-            <div class="status-content">
-              <div class="status-title"><i class="fas fa-briefcase"></i> 在校学习 | <span>Schooling</span></div>
-              <div class="status-main">2025年9月1日开始于天津工业大学从事深度学习研究工作。</div>
-              <div class="status-desc">On September 1, 2025, he began working on deep learning research at Tianjin University of Technology.</div>
-            </div>
-          </div>
-        </section>
-
-        <!-- 联系我部分 -->
-        <section id="contact" class="section">
-            <div class="container">
-                <h2 class="section-title">联系方式 | Contact me</h2>
-                <div class="contact-grid">
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <h3>邮箱 | Email</h3>
-                        <p><a href="mailto:lianglewen161@gmail.com">lianglewen161@gmail.com</a></p>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fab fa-orcid"></i>
-                        <h3>ORCID</h3>
-                        <p><a href="https://orcid.org/0009-0001-9552-3183" target="_blank">0009-0001-9552-3183</a></p>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fab fa-github"></i>
-                        <h3>GitHub</h3>
-                        <p><a href="https://github.com/lwLiang1" target="_blank">@lwLiang1</a></p>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fab fa-weixin"></i>
-                        <h3>微信 | WeChat</h3>
-                        <p>a13021357275</p>
-                    </div>
+        <!-- Contact -->
+        <section id="contact" class="py-32 px-6 reveal">
+            <div class="max-w-4xl mx-auto glass rounded-[4rem] p-16 text-center border-teal-400/20 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-teal-400/5 to-transparent"></div>
+                <h2 class="text-5xl font-black text-slate-200 mb-8 tracking-tighter italic">LET'S CONNECT</h2>
+                <p class="text-slate-400 text-lg mb-16 max-w-xl mx-auto">欢迎探讨学术合作或技术交流。点击下方图标即可通过不同渠道与我取得联系。</p>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-12">
+                    <a href="mailto:lianglewen161@gmail.com" class="group">
+                        <div class="w-20 h-20 glass rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:bg-teal-400 group-hover:text-slate-900 transition-all duration-500 shadow-xl group-hover:shadow-teal-400/20">
+                            <i class="fa-solid fa-envelope text-3xl"></i>
+                        </div>
+                        <span class="text-xs font-black tracking-widest text-slate-500 group-hover:text-teal-400 uppercase">Email</span>
+                    </a>
+                    <a href="https://github.com/lwLiang1" target="_blank" class="group">
+                        <div class="w-20 h-20 glass rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:bg-teal-400 group-hover:text-slate-900 transition-all duration-500 shadow-xl group-hover:shadow-teal-400/20">
+                            <i class="fa-brands fa-github text-3xl"></i>
+                        </div>
+                        <span class="text-xs font-black tracking-widest text-slate-500 group-hover:text-teal-400 uppercase">GitHub</span>
+                    </a>
+                    <a href="#" onclick="copyText('a13021357275')" class="group">
+                        <div class="w-20 h-20 glass rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:bg-teal-400 group-hover:text-slate-900 transition-all duration-500 shadow-xl group-hover:shadow-teal-400/20">
+                            <i class="fa-brands fa-weixin text-3xl"></i>
+                        </div>
+                        <span class="text-xs font-black tracking-widest text-slate-500 group-hover:text-teal-400 uppercase">WeChat</span>
+                    </a>
+                    <a href="https://orcid.org/0009-0001-9552-3183" target="_blank" class="group">
+                        <div class="w-20 h-20 glass rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:bg-teal-400 group-hover:text-slate-900 transition-all duration-500 shadow-xl group-hover:shadow-teal-400/20">
+                            <i class="fa-brands fa-orcid text-3xl"></i>
+                        </div>
+                        <span class="text-xs font-black tracking-widest text-slate-500 group-hover:text-teal-400 uppercase">ORCID</span>
+                    </a>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- PDF预览模态框 -->
-    <div id="pdfModal" class="pdf-modal">
-        <div class="pdf-modal-content">
-            <div class="pdf-modal-header">
-                <h3 id="pdfTitle">PDF预览</h3>
-                <button class="pdf-modal-close" onclick="closePDFViewer()">&times;</button>
-            </div>
-            <div class="pdf-modal-body">
-                <iframe id="pdfViewer" src="" frameborder="0"></iframe>
-            </div>
-        </div>
-    </div>
-
-    <!-- 引用格式模态框 -->
-    <div id="citationModal" class="citation-modal">
-        <div class="citation-modal-content">
-            <div class="citation-modal-header">
-                <h3>引用格式 | Citation Formats</h3>
-                <button class="citation-modal-close" onclick="closeCitationModal()">&times;</button>
-            </div>
-            <div class="citation-modal-body">
-                <div class="citation-format">
-                    <h4>GB/T 7714-2015 格式</h4>
-                    <div class="citation-text" id="gbCitation">
-                        <p id="gbText"></p>
-                    </div>
-                    <button class="copy-btn" onclick="copyCitation('gbText')">复制 | Copy</button>
-                </div>
-                <div class="citation-format">
-                    <h4>BibTeX 格式</h4>
-                    <div class="citation-text" id="bibtexCitation">
-                        <pre id="bibtexText"></pre>
-                    </div>
-                    <button class="copy-btn" onclick="copyCitation('bibtexText')">复制 | Copy</button>
-                </div>
-                <div class="citation-format">
-                    <h4>APA 格式</h4>
-                    <div class="citation-text" id="apaCitation">
-                        <p id="apaText"></p>
-                    </div>
-                    <button class="copy-btn" onclick="copyCitation('apaText')">复制 | Copy</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 页脚 -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 梁乐文 (Lewen Liang). 保留所有权利 | All rights reserved.</p>
-        </div>
+    <!-- Footer -->
+    <footer class="py-20 border-t border-white/5 text-center">
+        <p class="text-slate-500 text-xs font-bold tracking-[0.3em] uppercase">
+            &copy; 2026 LEWEN LIANG / ALL RIGHTS RESERVED
+        </p>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Modals -->
+    <!-- PDF Modal -->
+    <div id="pdf-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-slate-950/95 backdrop-blur-md" onclick="closePDF()"></div>
+        <div class="relative glass w-full max-w-6xl h-[90vh] rounded-[3rem] overflow-hidden flex flex-col border border-teal-400/20">
+            <div class="p-6 border-b border-white/10 flex justify-between items-center bg-slate-900/50">
+                <h3 class="font-black text-slate-200 tracking-widest uppercase text-xs">Paper Preview</h3>
+                <button onclick="closePDF()" class="w-10 h-10 flex items-center justify-center hover:bg-teal-400 hover:text-slate-900 rounded-full transition-all">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+            <iframe id="pdf-frame" src="" class="flex-1 w-full bg-white border-none"></iframe>
+        </div>
+    </div>
+
+    <!-- Citation Modal -->
+    <div id="cite-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-slate-950/90 backdrop-blur-sm" onclick="closeCitation()"></div>
+        <div class="relative glass w-full max-w-lg rounded-[3rem] p-12 space-y-8 border border-teal-400/20 shadow-2xl">
+            <h3 class="text-3xl font-black text-slate-200 tracking-tighter italic">CITE</h3>
+            <div class="space-y-6 text-sm">
+                <div>
+                    <p class="text-[10px] font-black text-teal-400 uppercase tracking-widest mb-2">APA Format</p>
+                    <div class="p-4 bg-slate-900/80 rounded-2xl border border-white/5 text-slate-400 leading-relaxed" id="apa-text">
+                        Wang, J., Shi, Y., & Liang, L. (2024). Progress in image recovery... ICEEIE 2024.
+                    </div>
+                </div>
+                <div>
+                    <p class="text-[10px] font-black text-teal-400 uppercase tracking-widest mb-2">BibTeX</p>
+                    <div class="p-4 bg-slate-900/80 rounded-2xl border border-white/5 text-slate-500 font-mono text-xs overflow-x-auto" id="bib-text">
+                        @inproceedings{liang2024progress...}
+                    </div>
+                </div>
+            </div>
+            <button onclick="closeCitation()" class="w-full py-4 bg-teal-400 text-slate-900 rounded-2xl font-black tracking-widest uppercase hover:bg-teal-300 transition-all">Close</button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 z-[200] px-8 py-3 glass border-teal-400/30 rounded-full text-xs font-black text-teal-400 uppercase translate-y-20 transition-transform duration-500 tracking-widest">
+        Copied to Clipboard
+    </div>
+
+    <script>
+        // --- Spotlight Logic ---
+        const spotlight = document.getElementById('spotlight');
+        window.addEventListener('mousemove', e => {
+            document.body.style.setProperty('--mouse-x', `${e.clientX}px`);
+            document.body.style.setProperty('--mouse-y', `${e.clientY}px`);
+        });
+
+        // --- Navbar Logic ---
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('glass', 'py-4');
+                nav.classList.remove('py-6');
+            } else {
+                nav.classList.remove('glass', 'py-4');
+                nav.classList.add('py-6');
+            }
+        });
+
+        // --- GitHub API ---
+        async function fetchRepos() {
+            const container = document.getElementById('github-repos');
+            try {
+                const response = await fetch('https://api.github.com/users/lwLiang1/repos?sort=updated&per_page=6');
+                const repos = await response.json();
+                
+                container.innerHTML = repos.map(repo => `
+                    <div class="glass p-8 rounded-[2rem] flex flex-col h-full border-white/5 hover:border-teal-400/30">
+                        <div class="flex justify-between items-start mb-6">
+                            <i class="fa-brands fa-github text-3xl text-slate-600 group-hover:text-teal-400 transition-colors"></i>
+                            <div class="flex gap-4 text-[10px] font-black text-slate-500">
+                                <span><i class="fa-solid fa-star mr-1"></i>${repo.stargazers_count}</span>
+                                <span><i class="fa-solid fa-code-fork mr-1"></i>${repo.forks_count}</span>
+                            </div>
+                        </div>
+                        <h3 class="font-bold text-slate-200 mb-3 group-hover:text-teal-400 truncate tracking-tight">${repo.name}</h3>
+                        <p class="text-slate-500 text-xs mb-8 line-clamp-2 leading-relaxed flex-grow">${repo.description || 'No description available for this repository.'}</p>
+                        <div class="flex justify-between items-center pt-6 border-t border-white/5">
+                            <span class="text-[9px] font-black uppercase tracking-widest text-teal-400/60">${repo.language || 'Code'}</span>
+                            <a href="${repo.html_url}" target="_blank" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-xs hover:bg-teal-400 hover:text-slate-900 transition-all">
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (err) {
+                container.innerHTML = '<p class="col-span-full text-center text-slate-500">Failed to load repositories.</p>';
+            }
+        }
+
+        // --- Reveal Animation ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // --- Modals & Utils ---
+        function openPDF(path) {
+            document.getElementById('pdf-frame').src = path;
+            document.getElementById('pdf-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        function closePDF() {
+            document.getElementById('pdf-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        function showCitation() {
+            document.getElementById('cite-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeCitation() {
+            document.getElementById('cite-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.remove('translate-y-20');
+                setTimeout(() => toast.classList.add('translate-y-20'), 2000);
+            });
+        }
+
+        fetchRepos();
+    </script>
 </body>
 </html>
